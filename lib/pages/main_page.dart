@@ -33,19 +33,48 @@ class _MainPageState extends State<MainPage> {
     return ChangeNotifierProvider(
       create: (_) => PageOffsetNotifier(_pageController),
       child: Scaffold(
-        body: Stack(
-          alignment: Alignment.centerLeft,
+        body: SafeArea(
+          child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              AppBar(),
+              PageView(
+                controller: _pageController,
+                physics: ClampingScrollPhysics(),
+                children: [
+                  PageLeopard(),
+                  PageVulture(),
+                ],
+              ),
+              LeopardImage(),
+              VultureImage(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AppBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      child: Padding(
+        padding: const EdgeInsets.all(36.0),
+        child: Row(
+          verticalDirection: VerticalDirection.up,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            PageView(
-              controller: _pageController,
-              physics: ClampingScrollPhysics(),
-              children: [
-                PageLeopard(),
-                PageVulture(),
-              ],
+            Text(
+              "SE",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            LeopardImage(),
-            VultureImage(),
+            Spacer(),
+            Icon(Icons.menu)
           ],
         ),
       ),
@@ -82,14 +111,16 @@ class VultureImage extends StatelessWidget {
         print(MediaQuery.of(context).size.width);
         return Positioned(
           left:
-              1.15 * MediaQuery.of(context).size.width - 0.85 * notifier.offset,
+              1.20 * MediaQuery.of(context).size.width - 0.85 * notifier.offset,
           //width: MediaQuery.of(context).size.width * 1.6,
           height: MediaQuery.of(context).size.height / 3,
           child: child!,
         );
       },
       child: IgnorePointer(
-        child: Image.asset('assets/images/vulture.png'),
+        child: Padding(
+            padding: const EdgeInsets.only(bottom: 90.0),
+            child: Image.asset('assets/images/vulture.png')),
       ),
     );
   }
