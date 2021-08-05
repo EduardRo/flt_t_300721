@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flt_t_300721/state_example/constants.dart';
 
+class Drink {
+  String name;
+  bool selected;
+
+  Drink({required this.name, required this.selected});
+}
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -17,9 +24,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CheckBoxScreen extends StatelessWidget {
-  const CheckBoxScreen({Key? key}) : super(key: key);
+class CheckBoxScreen extends StatefulWidget {
+  @override
+  _CheckBoxScreenState createState() => _CheckBoxScreenState();
+}
 
+// State of the widget
+class _CheckBoxScreenState extends State<CheckBoxScreen> {
+  List<Drink> drinks = [
+    Drink(name: 'Water', selected: false),
+    Drink(name: 'Cuba Libre', selected: false),
+    Drink(name: 'Pina Colada', selected: true),
+    Drink(name: 'Havana Club', selected: false)
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,20 +56,11 @@ class CheckBoxScreen extends StatelessWidget {
               children: [
                 Text('Drinks Tonight',
                     style: Theme.of(context).textTheme.headline4),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: false,
-                      onChanged: (value) {
-                        print(value);
-                      },
-                    ),
-                    Text(
-                      'Water',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                  ],
-                ),
+                ...drinks
+                    .map(
+                      (drink) => DrinksWidget(drinkName: drink.name),
+                    )
+                    .toList(),
                 Text(
                   'The order is: ',
                   style: Theme.of(context).textTheme.headline2,
@@ -70,6 +78,34 @@ class CheckBoxScreen extends StatelessWidget {
           ),
         )),
       ),
+    );
+  }
+}
+
+class DrinksWidget extends StatefulWidget {
+  final String drinkName;
+
+  const DrinksWidget({Key? key, required this.drinkName}) : super(key: key);
+  @override
+  _DrinksWidgetState createState() => _DrinksWidgetState();
+}
+
+class _DrinksWidgetState extends State<DrinksWidget> {
+  bool waterCheckboxValue = false;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          value: waterCheckboxValue,
+          onChanged: (value) {
+            waterCheckboxValue = !waterCheckboxValue;
+            setState(() {});
+            print('$waterCheckboxValue, ${widget.drinkName}');
+          },
+        ),
+        Text(widget.drinkName),
+      ],
     );
   }
 }
