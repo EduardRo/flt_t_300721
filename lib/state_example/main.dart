@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flt_t_300721/state_example/constants.dart';
 
-class Drink {
+class Drinks {
   String name;
   bool selected;
 
-  Drink({required this.name, required this.selected});
+  Drinks({required this.name, required this.selected});
 }
 
 void main() => runApp(MyApp());
@@ -31,11 +31,11 @@ class CheckBoxScreen extends StatefulWidget {
 
 // State of the widget
 class _CheckBoxScreenState extends State<CheckBoxScreen> {
-  List<Drink> drinks = [
-    Drink(name: 'Water', selected: false),
-    Drink(name: 'Cuba Libre', selected: false),
-    Drink(name: 'Pina Colada', selected: true),
-    Drink(name: 'Havana Club', selected: false)
+  List<Drinks> drinks = [
+    Drinks(name: 'Water', selected: false),
+    Drinks(name: 'Cuba Libre', selected: false),
+    Drinks(name: 'Pina Colada', selected: true),
+    Drinks(name: 'Havana Club', selected: false)
   ];
   @override
   Widget build(BuildContext context) {
